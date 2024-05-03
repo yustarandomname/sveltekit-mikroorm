@@ -16,4 +16,12 @@ export default class Post {
 		this.title = title;
 		this.body = body;
 	}
+
+	toPOJO() {
+		return {
+			id: this.id,
+			title: this.title,
+			body: this.body
+		};
+	}
 }

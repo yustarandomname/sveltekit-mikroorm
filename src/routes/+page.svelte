@@ -1,31 +1,26 @@
 <script lang="ts">
-	import type Post from '$lib/entities/Post';
-	import { onMount } from 'svelte';
+	export let data;
 
-	// src/routes/index.svelte
-	export let posts: Post[] = [];
+	async function add() {
+		const response = await fetch('/', {
+			method: 'POST'
+		});
 
-	onMount(() => {
-		fetch('/')
-			.then((res) => res.json())
-			.then((data) => {
-				posts = data;
-			});
-	});
+		if (response.ok) {
+			const res = await response.json();
+
+			console.log(res.post);
+
+			data.posts = [...data.posts, res.post];
+		}
+	}
 </script>
 
-<h1>List of Posts ({posts.length})</h1>
+<h1>List of Posts ({data.posts.length})</h1>
 
-{#each posts as post}
+{#each data.posts as post}
 	<h2>{post.title}</h2>
 	<p>{post.body}</p>
 {/each}
 
-<form method="POST">
-	<label for="title">Title</label>
-	<input type="text" name="title" placeholder="Post Title" />
-	<br />
-	<textarea name="body" placeholder="Post Content"></textarea>
-	<br />
-	<input type="submit" value="New Post" />
-</form>
+<button on:click={add}>Add</button>
