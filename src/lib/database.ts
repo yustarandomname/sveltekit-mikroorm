@@ -7,7 +7,6 @@ const config: Options = {
 	dbName: 'db',
 	driver: PostgreSqlDriver,
 	clientUrl: 'postgresql://user:wachtwoord@localhost:5432/db?schema=public',
-	type: 'postgresql',
 	entities: [Post],
 
 	migrations: {
@@ -19,9 +18,9 @@ const config: Options = {
 
 const orm = await MikroORM.init(config);
 // Create the new migrations, then apply them
-const migrator = orm.getMigrator();
-await migrator.createMigration();
-await migrator.up();
+// const migrator = orm.getMigrator();
+// await migrator.createMigration();
+// await migrator.up();
 
 // Export the orm as default
 export default orm;
